@@ -283,7 +283,7 @@ const RFPDetails = () => {
                             <DollarSign className="w-4 h-4" />
                             <span className="text-xs font-semibold uppercase">Price</span>
                           </div>
-                          <p className="text-2xl font-bold text-gray-900">${parsedDetails.price}</p>
+                          <p className="text-2xl font-bold text-gray-900">₹{parsedDetails.price}</p>
                         </div>
                       )}
                       {parsedDetails.deliveryTime && (
