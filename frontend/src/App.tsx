@@ -13,7 +13,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="create" element={<CreateRFP />} />
           <Route path="vendors" element={<VendorManagement />} />
-          <Route path="rfps/:id" element={<RFPDetails />} />
+          <Route path="rfp/:id" element={<RFPDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>
