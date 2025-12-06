@@ -21,18 +21,8 @@ const getConfig = () => ({
 
 export const fetchUnseenEmails = async () => {
     try {
-        // console.log('Attempting to connect to IMAP server...');
-        // console.log('IMAP Config:', {
-        //     host: process.env.EMAIL_HOST,
-        //     user: process.env.EMAIL_USER,
-        //     port: 993,
-        // });
-
         const connection = await imaps.connect(getConfig());
-        // console.log('IMAP connection successful');
-
         await connection.openBox('INBOX');
-        console.log('INBOX opened successfully');
 
         // Calculate date 2 days ago
         const twoDaysAgo = new Date();

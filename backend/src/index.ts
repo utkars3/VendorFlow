@@ -1,14 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import rfpRoutes from './routes/rfp.routes';
+import vendorRoutes from './routes/vendor.routes';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-import rfpRoutes from './routes/rfp.routes';
-import vendorRoutes from './routes/vendor.routes';
 
 app.use(cors());
 app.use(express.json());

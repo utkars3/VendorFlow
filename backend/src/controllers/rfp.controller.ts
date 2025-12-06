@@ -41,88 +41,96 @@ export const checkEmails = async (req: Request, res: Response) => {
             });
         }
 
+        // Optimization 1: Fetch vendors once, outside the loop
+        const vendors = await prisma.vendor.findMany();
+        console.log(`Found ${vendors.length} vendors in database`);
+
+        // Optimization 2: Create a Map for O(1) vendor lookup by email
+        const vendorEmailMap = new Map<string, typeof vendors[0]>();
+        vendors.forEach(vendor => {
+            vendorEmailMap.set(vendor.email.toLowerCase(), vendor);
+        });
+
         const results = [];
 
         for (let i = 0; i < emails.length; i++) {
             const email = emails[i];
             console.log(`Processing email ${i + 1}/${emails.length} from: ${email.from}`);
 
-            if (email.text && email.from) {
-                console.log(`Parsing proposal with AI...`);
-                const parsedData = await parseProposal(email.text);
-                console.log(`AI parsing complete`);
-
-                // Simple matching logic: find vendor by email substring
-                console.log(`Fetching vendors from database...`);
-                const vendors = await prisma.vendor.findMany();
-                console.log(`Found ${vendors.length} vendors in database`);
-                console.log(`Email from field: "${email.from}"`);
-
-                // Improved vendor matching - case insensitive and extract email from "Name <email>" format
-                const emailMatch = email.from?.match(/[\w\.-]+@[\w\.-]+\.\w+/);
-                const extractedEmail = emailMatch ? emailMatch[0].toLowerCase() : email.from?.toLowerCase();
-                console.log(`Extracted email: "${extractedEmail}"`);
-
-                const vendor = vendors.find(v => {
-                    const vendorEmail = v.email.toLowerCase();
-                    const matches = extractedEmail?.includes(vendorEmail) || vendorEmail.includes(extractedEmail || '');
-                    if (matches) {
-                        console.log(`Matched with vendor: ${v.name} (${v.email})`);
-                    }
-                    return matches;
-                });
-
-                if (vendor) {
-                    console.log(`Matched vendor: ${vendor.name}`);
-
-                    // Find the most recent RFP that was sent to this specific vendor
-                    console.log(`Looking for RFP sent to this vendor...`);
-                    const rfpVendor = await prisma.rFPVendor.findFirst({
-                        where: {
-                            vendorId: vendor.id,
-                            rfp: { status: 'SENT' }
-                        },
-                        include: { rfp: true },
-                        orderBy: { sentAt: 'desc' }
-                    });
-
-                    if (rfpVendor) {
-                        const rfp = rfpVendor.rfp;
-                        console.log(`Found RFP: ${rfp.title} (sent to this vendor), creating proposal...`);
-
-                        // Check if proposal already exists for this RFP and vendor
-                        const existingProposal = await prisma.proposal.findFirst({
-                            where: {
-                                rfpId: rfp.id,
-                                vendorId: vendor.id
-                            }
-                        });
-
-                        if (existingProposal) {
-                            console.log(`Proposal already exists for this RFP and vendor, skipping...`);
-                            results.push({ status: 'Duplicate', vendor: vendor.name, rfp: rfp.title });
-                        } else {
-                            await prisma.proposal.create({
-                                data: {
-                                    rfpId: rfp.id,
-                                    vendorId: vendor.id,
-                                    content: email.text,
-                                    parsedData: JSON.stringify(parsedData),
-                                    receivedAt: email.date || new Date(),
-                                }
-                            });
-                            console.log(`Proposal created successfully`);
-                            results.push({ status: 'Parsed', vendor: vendor.name, rfp: rfp.title });
-                        }
-                    } else {
-                        console.log(`No RFP found that was sent to this vendor`);
-                        results.push({ status: 'No RFP sent to this vendor', vendor: vendor.name });
-                    }
-                } else {
-                    console.log(`No matching vendor found for: ${email.from}`);
-                    results.push({ status: 'Unknown vendor', from: email.from });
-                }
+            if (!email.text || !email.from) {
+                console.log(`Skipping email - missing text or from field`);
+                continue;
             }
+
+            // Extract email address from "Name <email>" format
+            const emailMatch = email.from.match(/[\w\.-]+@[\w\.-]+\.\w+/);
+            const extractedEmail = emailMatch ? emailMatch[0].toLowerCase() : email.from.toLowerCase();
+            console.log(`Extracted email: "${extractedEmail}"`);
+
+            // Optimization 3: Direct O(1) lookup instead of O(n) find
+            const vendor = vendorEmailMap.get(extractedEmail);
+
+            if (!vendor) {
+                console.log(`No matching vendor found for: ${email.from}`);
+                results.push({ status: 'Unknown vendor', from: email.from });
+                continue;
+            }
+
+            console.log(`Matched vendor: ${vendor.name}`);
+
+            // Parse proposal with AI
+            console.log(`Parsing proposal with AI...`);
+            const parsedData = await parseProposal(email.text);
+            console.log(`AI parsing complete`);
+
+            // Optimization 4: Combine RFP lookup and duplicate check in a single query flow
+            console.log(`Looking for RFP sent to this vendor...`);
+            const rfpVendor = await prisma.rFPVendor.findFirst({
+                where: {
+                    vendorId: vendor.id,
+                    rfp: { status: 'SENT' }
+                },
+                include: {
+                    rfp: {
+                        include: {
+                            proposals: {
+                                where: { vendorId: vendor.id },
+                                select: { id: true }
+                            }
+                        }
+                    }
+                },
+                orderBy: { sentAt: 'desc' }
+            });
+
+            if (!rfpVendor) {
+                console.log(`No RFP found that was sent to this vendor`);
+                results.push({ status: 'No RFP sent to this vendor', vendor: vendor.name });
+                continue;
+            }
+
+            const rfp = rfpVendor.rfp;
+            console.log(`Found RFP: ${rfp.title} (sent to this vendor)`);
+
+            // Check if proposal already exists (now included in the query above)
+            if (rfp.proposals.length > 0) {
+                console.log(`Proposal already exists for this RFP and vendor, skipping...`);
+                results.push({ status: 'Duplicate', vendor: vendor.name, rfp: rfp.title });
+                continue;
+            }
+
+            // Create new proposal
+            await prisma.proposal.create({
+                data: {
+                    rfpId: rfp.id,
+                    vendorId: vendor.id,
+                    content: email.text,
+                    parsedData: JSON.stringify(parsedData),
+                    receivedAt: email.date || new Date(),
+                }
+            });
+            console.log(`Proposal created successfully`);
+            results.push({ status: 'Parsed', vendor: vendor.name, rfp: rfp.title });
         }
 
         console.log(`Finished processing all emails. Sending response...`);
