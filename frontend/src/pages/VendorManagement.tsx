@@ -130,37 +130,39 @@ const VendorManagement = () => {
           onClick={() => setShowAddModal(false)}
         >
           <div 
-            className="bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl border-2 border-indigo-500/30 ring-4 ring-indigo-500/10 animate-slideUp"
+            className="bg-white rounded-3xl max-w-lg w-full p-10 shadow-2xl border-2 border-indigo-500/30 ring-4 ring-indigo-500/10 animate-slideUp"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-6">
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2 text-center">
               Add New Vendor
             </h3>
+            <p className="text-gray-500 text-center mb-8">Fill in the vendor details below</p>
             
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Vendor Name *
+                  Vendor Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={newVendor.name}
                   onChange={(e) => setNewVendor({ ...newVendor, name: e.target.value })}
                   placeholder="Acme Corporation"
-                  className="input-field"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all duration-200 text-gray-900 placeholder-gray-400"
+                  autoFocus
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email Address *
+                  Email Address <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
                   value={newVendor.email}
                   onChange={(e) => setNewVendor({ ...newVendor, email: e.target.value })}
                   placeholder="vendor@example.com"
-                  className="input-field"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all duration-200 text-gray-900 placeholder-gray-400"
                 />
               </div>
 
@@ -173,15 +175,15 @@ const VendorManagement = () => {
                   value={newVendor.contactName}
                   onChange={(e) => setNewVendor({ ...newVendor, contactName: e.target.value })}
                   placeholder="John Doe"
-                  className="input-field"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all duration-200 text-gray-900 placeholder-gray-400"
                 />
               </div>
             </div>
 
-            <div className="flex gap-3 mt-6">
+            <div className="flex gap-4 mt-8">
               <button
                 onClick={() => setShowAddModal(false)}
-                className="btn-secondary flex-1"
+                className="flex-1 px-6 py-3 rounded-xl font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-all duration-200"
                 disabled={submitting}
               >
                 Cancel
@@ -189,7 +191,7 @@ const VendorManagement = () => {
               <button
                 onClick={handleAddVendor}
                 disabled={submitting}
-                className="btn-primary flex-1 flex items-center justify-center gap-2"
+                className="flex-1 px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2"
               >
                 {submitting ? (
                   <>
