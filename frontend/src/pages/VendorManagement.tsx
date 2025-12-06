@@ -48,31 +48,38 @@ const VendorManagement = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            Vendor Management
-          </h1>
-          <p className="text-gray-600 mt-2">Manage your vendor relationships</p>
+      <div className="relative">
+        {/* Add Vendor Button - Top Right */}
+        <div className="absolute top-0 right-0">
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2"
+          >
+            <Plus className="w-5 h-5" />
+            Add New Vendor
+          </button>
         </div>
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="btn-primary flex items-center gap-2"
-        >
-          <Plus className="w-5 h-5" />
-          Add Vendor
-        </button>
-      </div>
 
-      {/* Stats */}
-      <div className="glass-card rounded-2xl p-6 border-l-4 border-indigo-500">
-        <div className="flex items-center justify-between">
+        {/* Centered Title & Stats */}
+        <div className="text-center space-y-6 max-w-2xl mx-auto">
           <div>
-            <p className="text-sm font-medium text-gray-600">Total Vendors</p>
-            <p className="text-3xl font-bold text-gray-900 mt-1">{vendors.length}</p>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
+              Vendor Management
+            </h1>
+            <p className="text-gray-600">Manage your vendor relationships and partnerships</p>
           </div>
-          <div className="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center">
-            <Users className="w-7 h-7 text-indigo-600" />
+
+          {/* Inline Stats */}
+          <div className="flex items-center justify-center gap-3">
+            <div className="flex items-center gap-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl px-8 py-4 shadow-lg text-white">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-left">
+                <p className="text-indigo-100 text-xs font-medium uppercase tracking-wide">Total Vendors</p>
+                <p className="text-3xl font-bold">{vendors.length}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
