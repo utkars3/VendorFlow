@@ -7,26 +7,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Enums for type safety
+enum RFPStatus {
+  DRAFT
+  SENT
+  CLOSED
+}
+
 model RFP {
   id             String     @id @default(uuid())
   title          String
-  description    String
-  structuredData String?    // Stored as JSON string
-  status         String     @default("DRAFT") // DRAFT, SENT, CLOSED
+  description    String     @db.Text  // Use Text for large content
+  structuredData String?    @db.Text  // Use Text for JSON
+  status         RFPStatus  @default(DRAFT)  // Use enum for type safety
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   proposals      Proposal[]
   sentToVendors  RFPVendor[]
+
+  @@index([status])  // Index for filtering by status
+  @@index([createdAt])  // Index for sorting by date
 }
 
 model Vendor {
-  id          String     @id @default(uuid())
-  name        String
-  email       String     @unique
-  contactName String?
-  createdAt   DateTime   @default(now())
-  proposals   Proposal[]
+  id           String      @id @default(uuid())
+  name         String
+  email        String      @unique
+  contactName  String?
+  createdAt    DateTime    @default(now())
+  proposals    Proposal[]
   receivedRFPs RFPVendor[]
+
+  @@index([email])  // Index for email lookups
 }
 
 model RFPVendor {
@@ -38,15 +50,19 @@ model RFPVendor {
   vendor    Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
   
   @@unique([rfpId, vendorId])
+  @@index([vendorId, sentAt])  // Index for finding recent RFPs sent to vendor
 }
 
 model Proposal {
   id         String   @id @default(uuid())
   rfpId      String
   vendorId   String
-  content    String
-  parsedData String?   // Stored as JSON string
+  content    String   @db.Text  // Use Text for large email content
+  parsedData String?  @db.Text  // Use Text for JSON
   receivedAt DateTime @default(now())
   rfp        RFP      @relation(fields: [rfpId], references: [id], onDelete: Cascade)
   vendor     Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+
+  @@index([rfpId, receivedAt])  // Index for finding proposals by RFP, sorted by date
+  @@index([vendorId])  // Index for finding proposals by vendor
 }
