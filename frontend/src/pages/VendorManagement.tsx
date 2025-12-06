@@ -125,9 +125,17 @@ const VendorManagement = () => {
 
       {/* Add Vendor Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="glass-card rounded-2xl max-w-md w-full p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Add New Vendor</h3>
+        <div 
+          className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fadeIn"
+          onClick={() => setShowAddModal(false)}
+        >
+          <div 
+            className="bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl border-2 border-indigo-500/30 ring-4 ring-indigo-500/10 animate-slideUp"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-6">
+              Add New Vendor
+            </h3>
             
             <div className="space-y-4">
               <div>
