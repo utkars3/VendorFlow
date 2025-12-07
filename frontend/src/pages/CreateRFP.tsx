@@ -66,7 +66,7 @@ const CreateRFP = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Example: I need 50 laptops with 16GB RAM and 512GB SSD, delivery by end of month..."
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all duration-200 text-gray-900 placeholder-gray-400 min-h-[200px] resize-none"
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-white focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all duration-200 text-gray-900 placeholder-gray-400 min-h-[200px] resize-none"
             disabled={generating || creating}
           />
         </div>
@@ -74,7 +74,7 @@ const CreateRFP = () => {
         <button
           onClick={handleGenerate}
           disabled={!description.trim() || generating || creating}
-          className="w-full px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-xl shadow-indigo-500/20 hover:shadow-indigo-500/40 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
         >
           {generating ? (
             <>
