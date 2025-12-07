@@ -140,7 +140,7 @@ const Dashboard = () => {
               <Link
                 key={rfp.id}
                 to={`/rfp/${rfp.id}`}
-                className="glass-card rounded-2xl p-6 hover:shadow-2xl transition-all duration-200 transform hover:-translate-y-1 group"
+                className="glass-card rounded-2xl p-6 hover:shadow-2xl transition-all duration-200 transform hover:-translate-y-1 group border border-gray-200"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
