@@ -46,12 +46,13 @@ const CreateRFP = () => {
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl mb-4 shadow-lg">
-          <FileText className="w-8 h-8 text-white" />
-        </div>
+        
         <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
-          New RFP
+          Request For Proposal
         </h1>
+        {/* <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl mb-4 shadow-lg">
+          <FileText className="w-8 h-8 text-white" />
+        </div> */}
         <p className="text-gray-600">Describe your requirements in natural language and let AI structure it for you</p>
       </div>
 
