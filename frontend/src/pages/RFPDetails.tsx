@@ -146,14 +146,14 @@ const RFPDetails = () => {
             <button
               onClick={handleCheckEmails}
               disabled={checking}
-              className="btn-secondary flex items-center gap-2"
+              className="px-4 py-2 rounded-xl font-semibold text-gray-700 bg-white border-2 border-gray-200 hover:border-indigo-500 hover:text-indigo-600 shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5"
             >
               <RefreshCw className={`w-4 h-4 ${checking ? 'animate-spin' : ''}`} />
               Check Emails
             </button>
             <button
               onClick={() => setShowSendModal(true)}
-              className="btn-primary flex items-center gap-2"
+              className="px-4 py-2 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-200 flex items-center gap-2 transform hover:-translate-y-0.5"
             >
               <Send className="w-4 h-4" />
               Send to Vendors
@@ -283,7 +283,11 @@ const RFPDetails = () => {
                             <DollarSign className="w-4 h-4" />
                             <span className="text-xs font-semibold uppercase">Price</span>
                           </div>
-                          <p className="text-2xl font-bold text-gray-900">₹{parsedDetails.price}</p>
+                          <p className="text-2xl font-bold text-gray-900">
+                            {typeof parsedDetails.price === 'object' 
+                              ? (parsedDetails.price.amount || parsedDetails.price.value || parsedDetails.price.total || parsedDetails.price.price || JSON.stringify(parsedDetails.price))
+                              : `₹${parsedDetails.price}`}
+                          </p>
                         </div>
                       )}
                       {parsedDetails.deliveryTime && (
@@ -292,7 +296,11 @@ const RFPDetails = () => {
                             <Clock className="w-4 h-4" />
                             <span className="text-xs font-semibold uppercase">Delivery</span>
                           </div>
-                          <p className="text-lg font-bold text-gray-900">{parsedDetails.deliveryTime}</p>
+                          <p className="text-lg font-bold text-gray-900">
+                            {typeof parsedDetails.deliveryTime === 'object' 
+                              ? JSON.stringify(parsedDetails.deliveryTime) 
+                              : parsedDetails.deliveryTime}
+                          </p>
                         </div>
                       )}
                       {parsedDetails.warranty && (
@@ -301,7 +309,11 @@ const RFPDetails = () => {
                             <CheckCircle2 className="w-4 h-4" />
                             <span className="text-xs font-semibold uppercase">Warranty</span>
                           </div>
-                          <p className="text-lg font-bold text-gray-900">{parsedDetails.warranty}</p>
+                          <p className="text-lg font-bold text-gray-900">
+                            {typeof parsedDetails.warranty === 'object' 
+                              ? JSON.stringify(parsedDetails.warranty) 
+                              : parsedDetails.warranty}
+                          </p>
                         </div>
                       )}
                     </div>
