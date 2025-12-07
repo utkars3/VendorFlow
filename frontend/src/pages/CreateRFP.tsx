@@ -49,7 +49,7 @@ const CreateRFP = () => {
         <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl mb-4 shadow-lg">
           <FileText className="w-8 h-8 text-white" />
         </div>
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
           Create New RFP
         </h1>
         <p className="text-gray-600">Describe your requirements in natural language and let AI structure it for you</p>
@@ -58,14 +58,14 @@ const CreateRFP = () => {
       {/* Input Section */}
       <div className="glass-card rounded-2xl p-8 space-y-6">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Describe Your Requirements
           </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Example: I need 50 laptops with 16GB RAM and 512GB SSD, delivery by end of month..."
-            className="input-field min-h-[200px] resize-none"
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 outline-none transition-all duration-200 text-gray-900 placeholder-gray-400 min-h-[200px] resize-none"
             disabled={generating || creating}
           />
         </div>
@@ -73,7 +73,7 @@ const CreateRFP = () => {
         <button
           onClick={handleGenerate}
           disabled={!description.trim() || generating || creating}
-          className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {generating ? (
             <>
@@ -111,14 +111,14 @@ const CreateRFP = () => {
           <div className="flex gap-3">
             <button
               onClick={() => setStructuredData(null)}
-              className="btn-secondary flex-1"
+              className="flex-1 px-6 py-3 rounded-xl font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-all duration-200"
             >
               Regenerate
             </button>
             <button
               onClick={handleCreate}
               disabled={creating}
-              className="btn-primary flex-1 flex items-center justify-center gap-2"
+              className="flex-1 px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2"
             >
               {creating ? (
                 <>
