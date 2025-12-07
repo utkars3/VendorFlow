@@ -50,7 +50,7 @@ const CreateRFP = () => {
           <FileText className="w-8 h-8 text-white" />
         </div>
         <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
-          Create New RFP
+          New RFP
         </h1>
         <p className="text-gray-600">Describe your requirements in natural language and let AI structure it for you</p>
       </div>
