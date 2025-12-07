@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { LayoutDashboard, PlusCircle, Users, FileText, Sparkles } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, Users, Sparkles } from 'lucide-react';
 import clsx from 'clsx';
 
 const navItems = [
