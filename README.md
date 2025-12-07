@@ -2,6 +2,16 @@
 
 **ProcureAI** is an intelligent procurement platform that streamlines the entire Request for Proposal (RFP) lifecycle. By leveraging Google's Gemini AI, it automates the tedious parts of sourcing—from drafting requirements to analyzing complex vendor proposals.
 
+<img width="1438" height="812" alt="Screenshot 2025-12-07 at 4 51 13 PM" src="https://github.com/user-attachments/assets/511da133-cbc2-4d1b-8fb2-73db96405bad" />
+<img width="1438" height="812" alt="Screenshot 2025-12-07 at 4 51 02 PM" src="https://github.com/user-attachments/assets/8faae5c0-92c6-4e43-81fd-2f736948e1c3" />
+<img width="1438" height="812" alt="Screenshot 2025-12-07 at 4 51 47 PM" src="https://github.com/user-attachments/assets/61ac716b-8e59-466e-96aa-1ce7c40744e5" />
+<img width="1438" height="812" alt="Screenshot 2025-12-07 at 4 51 27 PM" src="https://github.com/user-attachments/assets/b0ff4fc6-ba88-47bd-915b-c2ffe26b9f4a" />
+<img width="1438" height="812" alt="Screenshot 2025-12-07 at 4 50 40 PM" src="https://github.com/user-attachments/assets/0a2d5b1b-868f-40c0-8c68-cf8396f707a8" />
+
+
+
+
+
 ## ✨ Key Features
 
 *   **🤖 AI-Powered RFP Generation**: Describe your needs in natural language, and the AI generates a structured, professional RFP.
