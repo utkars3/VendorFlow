@@ -16,7 +16,7 @@ const getModel = () => {
 export const generateRFPStructure = async (naturalLanguageInput: string) => {
     try {
         const prompt = `You are a procurement expert. Extract structured data from the user's RFP description. 
-    Return a JSON object with fields: title (short summary), items (list of items with quantity and specs), budget (number or string), deadline (date or string), paymentTerms, warranty, and any other relevant fields. 
+    Return a JSON object with fields: title (short summary), items (list of items with quantity and specs), budget (number or string, in INR), deadline (date or string), paymentTerms, warranty, and any other relevant fields. 
     Do not include markdown formatting, just raw JSON.
     
     Input: ${naturalLanguageInput}`;
@@ -44,7 +44,7 @@ export const generateRFPStructure = async (naturalLanguageInput: string) => {
 export const parseProposal = async (emailContent: string) => {
     try {
         const prompt = `You are a procurement expert. Extract structured data from the vendor's proposal email. 
-    Return a JSON object with fields: price (total cost), deliveryTime, warranty, paymentTerms, and any other relevant details. 
+    Return a JSON object with fields: price (total cost in INR), deliveryTime, warranty, paymentTerms, and any other relevant details. 
     Do not include markdown formatting, just raw JSON.
     
     Email Content: ${emailContent}`;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { RefreshCw, Send, Sparkles, FileText, Clock, Mail, DollarSign, Package, Loader2, CheckCircle2 } from 'lucide-react';
+import { RefreshCw, Send, Sparkles, FileText, Clock, Mail, DollarSign, Package, Loader2, CheckCircle2, IndianRupee } from 'lucide-react';
 import api from '../lib/api';
 
 const RFPDetails = () => {
@@ -226,7 +226,7 @@ const RFPDetails = () => {
             <button
               onClick={handleCompare}
               disabled={comparing}
-              className="btn-primary flex items-center gap-2"
+              className="px-6 py-2.5 rounded-xl font-bold text-white bg-gradient-to-r from-fuchsia-600 to-pink-600 hover:from-fuchsia-700 hover:to-pink-700 shadow-lg hover:shadow-xl hover:shadow-fuchsia-500/30 transition-all duration-200 flex items-center gap-2 transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {comparing ? (
                 <>
@@ -280,13 +280,13 @@ const RFPDetails = () => {
                       {parsedDetails.price && (
                         <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-4 border border-emerald-200">
                           <div className="flex items-center gap-2 text-emerald-700 mb-1">
-                            <DollarSign className="w-4 h-4" />
+                            <IndianRupee className="w-4 h-4" />
                             <span className="text-xs font-semibold uppercase">Price</span>
                           </div>
                           <p className="text-2xl font-bold text-gray-900">
-                            {typeof parsedDetails.price === 'object' 
+                            ₹{typeof parsedDetails.price === 'object' 
                               ? (parsedDetails.price.amount || parsedDetails.price.value || parsedDetails.price.total || parsedDetails.price.price || JSON.stringify(parsedDetails.price))
-                              : `₹${parsedDetails.price}`}
+                              : parsedDetails.price}
                           </p>
                         </div>
                       )}
