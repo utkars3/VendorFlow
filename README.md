@@ -37,7 +37,7 @@
     # Configure Environment Variables
     cp .env.example .env
     # Update .env with:
-    # DATABASE_URL="postgresql://user:password@localhost:5432/procurement_db"
+    # DATABASE_URL="db_url"
     # GEMINI_API_KEY="your_api_key"
     # EMAIL_USER="your_email@gmail.com"
     # EMAIL_PASS="your_app_password"
