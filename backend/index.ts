@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import rfpRoutes from './routes/rfp.routes';
-import vendorRoutes from './routes/vendor.routes';
+import rfpRoutes from './src/routes/rfp.routes';
+import vendorRoutes from './src/routes/vendor.routes';
 
 dotenv.config();
 
